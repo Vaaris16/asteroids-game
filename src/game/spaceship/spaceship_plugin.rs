@@ -59,8 +59,8 @@ fn space_ship_controls(
 ) {
     for key in key_pressed.get_pressed() {
         match key {
-            KeyCode::ArrowRight => space_ship.rotate_z(SPACE_SHIP_ROTATION),
-            KeyCode::ArrowLeft => space_ship.rotate_z(-SPACE_SHIP_ROTATION),
+            KeyCode::ArrowRight => space_ship.rotate_z(-SPACE_SHIP_ROTATION),
+            KeyCode::ArrowLeft => space_ship.rotate_z(SPACE_SHIP_ROTATION),
             _ => (),
         }
 
