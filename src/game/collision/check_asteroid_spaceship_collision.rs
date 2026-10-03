@@ -6,7 +6,7 @@ use crate::{
     core::game_assets::game_assets::GameAssets,
     game::{
         asteroids::asteroid_component::Asteroid,
-        spaceship::spaceship_plugin::SpaceShip,
+        spaceship::spaceship_plugin::{Immune, SpaceShip, set_spaceship_immune},
         ui::spaceship_lifes::spaceship_lifes_plugin::{
             SpaceShipLifes, SpaceShipLifesIndicator, decrement_lifes,
         },
@@ -22,6 +22,7 @@ pub fn check_asteroid_spaceship_collision(
     life_indicator: Query<(Entity, &SpaceShipLifesIndicator), With<SpaceShipLifesIndicator>>,
     mut commands: Commands,
     game_assets: Res<GameAssets>,
+    spaceship: Single<(Entity, Has<Immune>), With<SpaceShip>>,
 ) {
     for event in events.read() {
         let entity1 = event.collider1;
@@ -30,11 +31,14 @@ pub fn check_asteroid_spaceship_collision(
         if (asteroids.contains(entity1) && space_ship.contains(entity2))
             || (asteroids.contains(entity2) && space_ship.contains(entity1))
         {
-            decrement_lifes(life_indicator, &mut lifes, &mut next_state, &mut commands);
-            commands.spawn((
-                AudioPlayer::new(game_assets.life_decrement_sound.clone()),
-                PlaybackSettings::DESPAWN,
-            ));
+            if !spaceship.1 {
+                decrement_lifes(life_indicator, &mut lifes, &mut next_state, &mut commands);
+                commands.spawn((
+                    AudioPlayer::new(game_assets.life_decrement_sound.clone()),
+                    PlaybackSettings::DESPAWN,
+                ));
+                set_spaceship_immune(&mut commands, &spaceship.0);
+            }
         }
     }
 }

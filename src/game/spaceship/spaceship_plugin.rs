@@ -1,3 +1,5 @@
+use std::time::Duration;
+
 use avian2d::prelude::*;
 use bevy::prelude::*;
 
@@ -10,11 +12,18 @@ impl Plugin for SpaceShipPlugin {
         app.add_systems(OnEnter(GameState::Game), spawn_space_ship)
             .add_systems(Update, space_ship_controls.in_set(GameSet))
             .add_systems(Update, out_of_bounds_bullets.in_set(GameSet))
+            .add_systems(Update, fade_spaceship_immune)
             .add_systems(OnExit(GameState::Game), cleanup_spaceship);
     }
 }
 #[derive(Component)]
 pub struct SpaceShip;
+
+#[derive(Component)]
+pub struct Immune {
+    immune_timer: Timer,
+    blink_timer: Timer,
+}
 
 #[derive(Component)]
 pub struct Bullet;
@@ -119,5 +128,34 @@ fn out_of_bounds_bullets(
         {
             commands.entity(bullet_entity).despawn();
         }
+    }
+}
+
+pub fn set_spaceship_immune(commands: &mut Commands, spaceship: &Entity) {
+    commands.entity(*spaceship).insert(Immune {
+        immune_timer: Timer::new(Duration::from_secs(1), TimerMode::Repeating),
+        blink_timer: Timer::new(Duration::from_secs_f32(0.1), TimerMode::Repeating),
+    });
+}
+
+fn fade_spaceship_immune(
+    time: Res<Time>,
+    mut space_ship: Single<(&mut Sprite, Entity, &mut Immune), With<Immune>>,
+    mut commands: Commands,
+) {
+    space_ship.2.immune_timer.tick(time.delta());
+    space_ship.2.blink_timer.tick(time.delta());
+
+    let alpha = space_ship.0.color.alpha();
+
+    if space_ship.2.blink_timer.just_finished() {
+        if alpha > 0.5 {
+            space_ship.0.color.set_alpha(0.15);
+        } else {
+            space_ship.0.color.set_alpha(1.0);
+        }
+    }
+    if space_ship.2.immune_timer.just_finished() {
+        commands.entity(space_ship.1).remove::<Immune>();
     }
 }
