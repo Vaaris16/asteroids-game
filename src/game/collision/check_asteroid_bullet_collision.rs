@@ -8,6 +8,7 @@ use crate::{
         spaceship::spaceship_plugin::Bullet,
         ui::score::score_plugin::Score,
     },
+    game_theme::game_theme::GameTheme,
 };
 
 // Checks if a bullet and asteroid collided, despawns both, and updates the score.
@@ -19,6 +20,7 @@ pub fn check_collision_asteroid_with_bullet(
     mut score: ResMut<Score>,
     window_s: Single<&Window>,
     game_assets: Res<GameAssets>,
+    game_theme: Res<GameTheme>,
 ) {
     let mut processed_asteroid: HashSet<Entity> = HashSet::new();
     for event in events.read() {
@@ -54,6 +56,7 @@ pub fn check_collision_asteroid_with_bullet(
                     window_s.height(),
                     smaller_asteroid_type.clone(),
                     &game_assets,
+                    &game_theme,
                 );
                 let vel = Asteroid::rand_vel();
 

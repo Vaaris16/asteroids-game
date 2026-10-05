@@ -9,19 +9,12 @@ impl Plugin for BackgroundPlugin {
     }
 }
 
-const BACKGROUND_IMAGE: &str = "star_background.png";
-
 #[derive(Component)]
-struct Background;
+pub struct Background;
 
-fn set_default_bg(
-    assets_server: Res<AssetServer>,
-    window: Single<&Window, With<PrimaryWindow>>,
-    mut commands: Commands,
-) {
+fn set_default_bg(window: Single<&Window, With<PrimaryWindow>>, mut commands: Commands) {
     commands.spawn((
         Sprite {
-            image: assets_server.load(BACKGROUND_IMAGE),
             custom_size: Some(Vec2::new(window.width(), window.height())),
             ..Default::default()
         },

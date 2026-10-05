@@ -8,6 +8,7 @@ use crate::{
         asteroids::{asteroid_component::Asteroid, asteroid_types::AsteroidType},
         game_plugin::GameSet,
     },
+    game_theme::game_theme::GameTheme,
 };
 
 pub struct AsteroidPlugin;
@@ -61,6 +62,7 @@ fn maintain_asteroids(
     asteroids: Query<(), With<Asteroid>>,
     mut commands: Commands,
     game_assets: Res<GameAssets>,
+    game_theme: Res<GameTheme>,
 ) {
     let asteroid_count = asteroids.iter().count();
 
@@ -70,6 +72,7 @@ fn maintain_asteroids(
         window_s.height(),
         asteroid_type,
         &game_assets,
+        &game_theme,
     );
     let (pos, vel) = asteroid.rand_pos_vel();
     if asteroid_count <= MAX_ASTEROIDS {

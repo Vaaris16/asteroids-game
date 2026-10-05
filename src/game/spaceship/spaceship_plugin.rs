@@ -3,7 +3,10 @@ use std::time::Duration;
 use avian2d::prelude::*;
 use bevy::prelude::*;
 
-use crate::{GameState, core::game_assets::game_assets::GameAssets, game::game_plugin::GameSet};
+use crate::{
+    GameState, core::game_assets::game_assets::GameAssets, game::game_plugin::GameSet,
+    game_theme::game_theme::GameTheme,
+};
 
 pub struct SpaceShipPlugin;
 
@@ -38,10 +41,14 @@ const SPACE_SHIP_POINT_B: Vec2 = Vec2::new(SPACE_SHIP_SIZE[0] / 2., -SPACE_SHIP_
 const SPACE_SHIP_POINT_C: Vec2 = Vec2::new(0., SPACE_SHIP_SIZE[1] / 2.);
 
 // Spawns the space ship.
-fn spawn_space_ship(game_assets: Res<GameAssets>, mut commands: Commands) {
+fn spawn_space_ship(
+    game_assets: Res<GameAssets>,
+    mut commands: Commands,
+    game_theme: Res<GameTheme>,
+) {
     commands.spawn((
         Sprite {
-            image: game_assets.spaceship_image.clone(),
+            image: game_assets.spaceship_image(&game_theme),
             ..Default::default()
         },
         Collider::triangle(SPACE_SHIP_POINT_A, SPACE_SHIP_POINT_B, SPACE_SHIP_POINT_C),
@@ -65,6 +72,7 @@ fn space_ship_controls(
     key_pressed: Res<ButtonInput<KeyCode>>,
     mut commands: Commands,
     game_assets: Res<GameAssets>,
+    game_theme: Res<GameTheme>,
 ) {
     for key in key_pressed.get_pressed() {
         match key {
@@ -74,7 +82,7 @@ fn space_ship_controls(
         }
 
         if key_pressed.just_pressed(KeyCode::Space) {
-            spawn_bullet(&space_ship, &mut commands, &game_assets);
+            spawn_bullet(&space_ship, &mut commands, &game_assets, &game_theme);
             commands.spawn((
                 AudioPlayer::new(game_assets.shoot_sound.clone()),
                 PlaybackSettings::DESPAWN,
@@ -88,11 +96,12 @@ fn spawn_bullet(
     space_ship: &Single<&mut Transform, With<SpaceShip>>,
     commands: &mut Commands,
     game_assets: &GameAssets,
+    game_theme: &GameTheme,
 ) {
     let tip = space_ship.translation + space_ship.rotation * BULLET_OFFSET;
     commands.spawn((
         Sprite {
-            image: game_assets.bullet_image.clone(),
+            image: game_assets.bullet_image(game_theme),
             ..Default::default()
         },
         Bullet,

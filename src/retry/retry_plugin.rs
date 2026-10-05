@@ -6,6 +6,12 @@ use crate::{
     TEXT_COLOR,
     core::game_fonts::fonts::GameFonts,
     game::ui::score::score_plugin::Score,
+    game_theme::{
+        theme_colors::ThemeColors,
+        theme_markers::{
+            ThemeBackground, ThemeBorderColor, ThemePrimaryTextColor, ThemeSecondaryTextColor,
+        },
+    },
 };
 
 pub struct RetryPlugin;
@@ -68,7 +74,9 @@ fn modal_window(assets_server: &AssetServer, score: Res<Score>) -> impl Bundle {
             ..Default::default()
         },
         BorderColor::all(BORDER_COLOR),
+        ThemeBorderColor,
         BackgroundColor(Color::BLACK),
+        ThemeBackground,
         children![
             game_over_text(assets_server),
             score_title(assets_server),
@@ -88,6 +96,8 @@ fn game_over_text(assets_server: &AssetServer) -> impl Bundle {
             font_size: px(35).into(),
             ..Default::default()
         },
+        TextColor(Color::WHITE),
+        ThemeSecondaryTextColor,
     )
 }
 
@@ -110,6 +120,7 @@ fn score_title(assets_server: &AssetServer) -> impl Bundle {
             ..Default::default()
         },
         TextColor(TEXT_COLOR),
+        ThemePrimaryTextColor,
     )
 }
 
@@ -132,6 +143,7 @@ fn final_score(score: Res<Score>, assets_server: &AssetServer) -> impl Bundle {
             font_size: px(FINAL_SCORE_FONT_SIZE).into(),
             ..Default::default()
         },
+        ThemePrimaryTextColor,
     )
 }
 
@@ -158,6 +170,7 @@ fn retry_button(assets_server: &AssetServer) -> impl Bundle {
         BackgroundColor(Color::BLACK),
         BorderColor::all(BORDER_COLOR),
         RetryButton,
+        ThemeBorderColor,
         children![(
             RetryButtonText,
             Text::new("Retry"),
@@ -169,6 +182,7 @@ fn retry_button(assets_server: &AssetServer) -> impl Bundle {
                 ..Default::default()
             },
             TextColor(TEXT_COLOR),
+            ThemeSecondaryTextColor,
         )],
     )
 }
@@ -181,6 +195,7 @@ fn retry_button_interactions(
         (With<RetryButton>, Changed<Interaction>),
     >,
     mut retry_button_text: Single<&mut TextColor, With<RetryButtonText>>,
+    theme_colors: Res<ThemeColors>,
 ) {
     for (interaction, mut bg_color) in retry_button {
         match *interaction {
@@ -188,12 +203,12 @@ fn retry_button_interactions(
                 game_state.set(GameState::SplashScreen);
             }
             Interaction::Hovered => {
-                retry_button_text.0 = Color::BLACK;
-                bg_color.0 = Color::WHITE;
+                retry_button_text.0 = theme_colors.hovered_text_color;
+                bg_color.0 = theme_colors.hovered_bg_color;
             }
             Interaction::None => {
-                retry_button_text.0 = Color::WHITE;
-                bg_color.0 = Color::BLACK;
+                retry_button_text.0 = theme_colors.secondary_text_color;
+                bg_color.0 = theme_colors.button_bg_color;
             }
         }
     }

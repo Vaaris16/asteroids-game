@@ -2,12 +2,14 @@ use avian2d::PhysicsPlugins;
 use bevy::{asset::AssetMetaCheck, prelude::*};
 
 use crate::{
-    core::core_plugin::CorePlugin, game::game_plugin::GamePlugin, retry::retry_plugin::RetryPlugin,
+    core::core_plugin::CorePlugin, game::game_plugin::GamePlugin,
+    game_theme::game_theme_plugin::GameThemePlugin, retry::retry_plugin::RetryPlugin,
     splashscreen::splash_screen_plugin::SplashScreenPlugin,
 };
 
 mod core;
 mod game;
+mod game_theme;
 mod retry;
 mod splashscreen;
 
@@ -26,6 +28,7 @@ pub enum GameState {
 
 fn main() {
     App::new()
+        .add_systems(Update, mute_all_audio)
         .add_plugins((
             DefaultPlugins
                 .set(WindowPlugin {
@@ -44,7 +47,14 @@ fn main() {
             GamePlugin,
             SplashScreenPlugin,
             RetryPlugin,
+            GameThemePlugin,
         ))
         .init_state::<GameState>()
         .run();
+}
+
+fn mute_all_audio(audio_sinks: Query<&mut AudioSink>) {
+    for mut sink in audio_sinks {
+        sink.mute(); // Or sink.set_volume(0.0);
+    }
 }

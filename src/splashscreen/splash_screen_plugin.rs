@@ -3,6 +3,10 @@ use crate::{
     GameState::{self},
     TEXT_COLOR,
     core::game_fonts::fonts::GameFonts,
+    game_theme::{
+        theme_colors::ThemeColors,
+        theme_markers::{ThemeBorderColor, ThemePrimaryTextColor},
+    },
 };
 use bevy::prelude::*;
 
@@ -57,6 +61,7 @@ fn splash_title(assets_server: &AssetServer) -> impl Bundle {
             ..Default::default()
         },
         TextColor(TEXT_COLOR),
+        ThemePrimaryTextColor,
     )
 }
 
@@ -82,6 +87,7 @@ fn start_button(assets_server: &AssetServer) -> impl Bundle {
         BorderColor::all(BORDER_COLOR),
         BackgroundColor(Color::BLACK),
         StartButton,
+        ThemeBorderColor,
         children![(
             StartButtonText,
             Text::new("START"),
@@ -93,6 +99,7 @@ fn start_button(assets_server: &AssetServer) -> impl Bundle {
                 font_size: px(START_BUTTON_FONT_SIZE).into(),
                 ..Default::default()
             },
+            ThemePrimaryTextColor,
         )],
     )
 }
@@ -105,6 +112,7 @@ fn button_interactions(
         (Changed<Interaction>, With<StartButton>),
     >,
     mut start_button_text_color: Single<&mut TextColor, With<StartButtonText>>,
+    theme_colors: Res<ThemeColors>,
 ) {
     for (interactions, mut background_color) in start_button {
         match *interactions {
@@ -112,12 +120,12 @@ fn button_interactions(
                 game_state.set(GameState::Game);
             }
             Interaction::Hovered => {
-                background_color.0 = Color::WHITE;
-                start_button_text_color.0 = Color::BLACK;
+                background_color.0 = theme_colors.hovered_bg_color;
+                start_button_text_color.0 = theme_colors.hovered_text_color;
             }
             Interaction::None => {
-                background_color.0 = Color::BLACK;
-                start_button_text_color.0 = Color::WHITE;
+                background_color.0 = theme_colors.button_bg_color;
+                start_button_text_color.0 = theme_colors.primary_text_color;
             }
         }
     }

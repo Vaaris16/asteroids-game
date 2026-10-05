@@ -2,6 +2,7 @@ use bevy::prelude::*;
 
 use crate::{
     GameState, TEXT_COLOR, core::game_fonts::fonts::GameFonts, game::game_plugin::GameSet,
+    game_theme::theme_markers::ThemePrimaryTextColor,
 };
 
 pub struct ScorePlugin;
@@ -61,6 +62,7 @@ fn spawn_score(mut commands: Commands, score: Res<Score>, assets_server: Res<Ass
                     ..Default::default()
                 },
                 TextColor(TEXT_COLOR),
+                ThemePrimaryTextColor,
                 ScoreText,
             ));
         });

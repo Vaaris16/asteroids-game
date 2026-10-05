@@ -1,6 +1,7 @@
 use crate::{
     core::game_assets::game_assets::GameAssets,
     game::asteroids::{asteroid_sides::Side, asteroid_types::AsteroidType},
+    game_theme::game_theme::GameTheme,
 };
 use bevy::prelude::*;
 use rand::{RngExt, rngs::ThreadRng};
@@ -37,6 +38,7 @@ impl Asteroid {
         window_y: f32,
         asteroid_type: AsteroidType,
         game_assets: &GameAssets,
+        game_theme: &GameTheme,
     ) -> Self {
         let collider_radius = Self::get_collider_radius(&asteroid_type);
         Self {
@@ -46,7 +48,7 @@ impl Asteroid {
             window_x,
             window_y,
             asteroid_type,
-            asteroid_path: game_assets.rand_asteroids(),
+            asteroid_path: game_assets.rand_asteroids(game_theme),
             collider_radius,
         }
     }
