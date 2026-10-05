@@ -9,7 +9,8 @@ use crate::{
     game_theme::{
         theme_colors::ThemeColors,
         theme_markers::{
-            ThemeBackground, ThemeBorderColor, ThemePrimaryTextColor, ThemeSecondaryTextColor,
+            ThemeBackground, ThemeBorderColor, ThemeButtonBackground, ThemePrimaryTextColor,
+            ThemeSecondaryTextColor,
         },
     },
 };
@@ -168,6 +169,7 @@ fn retry_button(assets_server: &AssetServer) -> impl Bundle {
             ..Default::default()
         },
         BackgroundColor(Color::BLACK),
+        ThemeButtonBackground,
         BorderColor::all(BORDER_COLOR),
         RetryButton,
         ThemeBorderColor,

@@ -5,7 +5,9 @@ use crate::{
     core::game_fonts::fonts::GameFonts,
     game_theme::{
         theme_colors::ThemeColors,
-        theme_markers::{ThemeBorderColor, ThemePrimaryTextColor},
+        theme_markers::{
+            ThemeBackground, ThemeBorderColor, ThemeButtonBackground, ThemePrimaryTextColor,
+        },
     },
 };
 use bevy::prelude::*;
@@ -86,6 +88,7 @@ fn start_button(assets_server: &AssetServer) -> impl Bundle {
         },
         BorderColor::all(BORDER_COLOR),
         BackgroundColor(Color::BLACK),
+        ThemeButtonBackground,
         StartButton,
         ThemeBorderColor,
         children![(

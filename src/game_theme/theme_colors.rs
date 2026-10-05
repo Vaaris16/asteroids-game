@@ -5,7 +5,8 @@ use crate::{
     game_theme::{
         game_theme::GameTheme,
         theme_markers::{
-            ThemeBackground, ThemeBorderColor, ThemePrimaryTextColor, ThemeSecondaryTextColor,
+            ThemeBackground, ThemeBorderColor, ThemeButtonBackground, ThemePrimaryTextColor,
+            ThemeSecondaryTextColor,
         },
     },
 };
@@ -85,6 +86,7 @@ pub fn set_changed_theme(
             Without<ThemePrimaryTextColor>,
         ),
     >,
+    button_background: Query<&mut BackgroundColor, With<ThemeButtonBackground>>,
     mut theme_colors: ResMut<ThemeColors>,
     mut background: Single<&mut Sprite, With<Background>>,
     game_assets: Res<GameAssets>,
@@ -102,6 +104,10 @@ pub fn set_changed_theme(
 
         for mut text_color in &mut secondary_text_colors {
             text_color.0 = theme_colors.secondary_text_color;
+        }
+
+        for mut button_background in button_background {
+            button_background.0 = theme_colors.button_bg_color;
         }
 
         background.image = game_assets.get_bg_image(&game_theme);

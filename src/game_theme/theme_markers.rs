@@ -11,3 +11,6 @@ pub struct ThemeSecondaryTextColor;
 
 #[derive(Component)]
 pub struct ThemeBackground;
+
+#[derive(Component)]
+pub struct ThemeButtonBackground;

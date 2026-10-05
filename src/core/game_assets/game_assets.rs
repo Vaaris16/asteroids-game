@@ -27,22 +27,22 @@ pub struct GameAssets {
 }
 
 // Background Image.
-const RETRO_BACKGROUND_IMAGE: &str = "retro_star_background.png";
-const COSMIC_BACKGROUND_IMAGE: &str = "cosmic_star_background.png";
+const RETRO_BACKGROUND_IMAGE: &str = "backgrounds/retro_star_background.png";
+const COSMIC_BACKGROUND_IMAGE: &str = "backgrounds/cosmic_star_background.png";
 // Image path of the space ship.
-const RETRO_SPACE_SHIP_IMAGE_PATH: &str = "retro_space_ship.png";
-const COSMIC_SPACE_SHIP_IMAGE_PATH: &str = "cosmic_space_ship.png";
+const RETRO_SPACE_SHIP_IMAGE_PATH: &str = "spaceship/retro_space_ship.png";
+const COSMIC_SPACE_SHIP_IMAGE_PATH: &str = "spaceship/cosmic_space_ship.png";
 // Image path of the bullet.
-const RETRO_BULLET_IMAGE_PATH: &str = "retro_bullet.png";
-const COSMIC_BULLET_IMAGE_PATH: &str = "cosmic_bullet.png";
+const RETRO_BULLET_IMAGE_PATH: &str = "bullet/retro_bullet.png";
+const COSMIC_BULLET_IMAGE_PATH: &str = "bullet/cosmic_bullet.png";
 // Defines the image paths for the asteroids.
-const RETRO_ASTEROID_PATH_1: &str = "asteroids_images/retro_asteroid_1.png";
-const RETRO_ASTEROID_PATH_2: &str = "asteroids_images/retro_asteroid_2.png";
-const RETRO_ASTEROID_PATH_3: &str = "asteroids_images/retro_asteroid_3.png";
+const RETRO_ASTEROID_PATH_1: &str = "asteroids_images/retro_asteroids/retro_asteroid_1.png";
+const RETRO_ASTEROID_PATH_2: &str = "asteroids_images/retro_asteroids/retro_asteroid_2.png";
+const RETRO_ASTEROID_PATH_3: &str = "asteroids_images/retro_asteroids/retro_asteroid_3.png";
 
-const COSMIC_ASTEROID_PATH_1: &str = "asteroids_images/cosmic_asteroid_1.png";
-const COSMIC_ASTEROID_PATH_2: &str = "asteroids_images/cosmic_asteroid_2.png";
-const COSMIC_ASTEROID_PATH_3: &str = "asteroids_images/cosmic_asteroid_3.png";
+const COSMIC_ASTEROID_PATH_1: &str = "asteroids_images/cosmic_asteroids/cosmic_asteroid_1.png";
+const COSMIC_ASTEROID_PATH_2: &str = "asteroids_images/cosmic_asteroids/cosmic_asteroid_2.png";
+const COSMIC_ASTEROID_PATH_3: &str = "asteroids_images/cosmic_asteroids/cosmic_asteroid_3.png";
 // Sound effects.
 const EXPLOSION_SOUND_EFFECT: &str = "sounds/explosion.wav";
 const SHOOT_SOUND_EFFECT: &str = "sounds/shoot_sound.wav";

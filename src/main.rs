@@ -1,5 +1,9 @@
 use avian2d::PhysicsPlugins;
-use bevy::{asset::AssetMetaCheck, prelude::*};
+use bevy::{
+    asset::AssetMetaCheck,
+    prelude::*,
+    render::view::screenshot::{Screenshot, save_to_disk},
+};
 
 use crate::{
     core::core_plugin::CorePlugin, game::game_plugin::GamePlugin,
@@ -28,7 +32,7 @@ pub enum GameState {
 
 fn main() {
     App::new()
-        .add_systems(Update, mute_all_audio)
+        .add_systems(Update, screenshot_on_spacebar)
         .add_plugins((
             DefaultPlugins
                 .set(WindowPlugin {
@@ -53,8 +57,16 @@ fn main() {
         .run();
 }
 
-fn mute_all_audio(audio_sinks: Query<&mut AudioSink>) {
-    for mut sink in audio_sinks {
-        sink.mute(); // Or sink.set_volume(0.0);
+fn screenshot_on_spacebar(
+    mut commands: Commands,
+    input: Res<ButtonInput<KeyCode>>,
+    mut counter: Local<u32>,
+) {
+    if input.just_pressed(KeyCode::KeyW) {
+        let path = format!("./screenshot-{}.png", *counter);
+        *counter += 1;
+        commands
+            .spawn(Screenshot::primary_window())
+            .observe(save_to_disk(path));
     }
 }
