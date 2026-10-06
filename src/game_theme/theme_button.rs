@@ -76,3 +76,10 @@ pub fn set_theme_icon(
 ) {
     button_theme_icon.image = game_assets.get_theme_icon(&game_theme);
 }
+
+pub fn cleanup_theme_button(
+    mut commands: Commands,
+    theme_button: Single<Entity, With<ThemeButton>>,
+) {
+    commands.entity(*theme_button).despawn();
+}

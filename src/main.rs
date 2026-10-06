@@ -32,7 +32,6 @@ pub enum GameState {
 
 fn main() {
     App::new()
-        .add_systems(Update, screenshot_on_spacebar)
         .add_plugins((
             DefaultPlugins
                 .set(WindowPlugin {
@@ -55,18 +54,4 @@ fn main() {
         ))
         .init_state::<GameState>()
         .run();
-}
-
-fn screenshot_on_spacebar(
-    mut commands: Commands,
-    input: Res<ButtonInput<KeyCode>>,
-    mut counter: Local<u32>,
-) {
-    if input.just_pressed(KeyCode::KeyW) {
-        let path = format!("./screenshot-{}.png", *counter);
-        *counter += 1;
-        commands
-            .spawn(Screenshot::primary_window())
-            .observe(save_to_disk(path));
-    }
 }

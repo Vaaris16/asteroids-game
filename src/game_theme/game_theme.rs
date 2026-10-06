@@ -2,8 +2,8 @@ use bevy::prelude::*;
 
 #[derive(Resource, Default, Debug)]
 pub enum GameTheme {
-    #[default]
     Retro,
+    #[default]
     Cosmic,
 }
 
