@@ -5,9 +5,7 @@ use crate::{
     core::game_fonts::fonts::GameFonts,
     game_theme::{
         theme_colors::ThemeColors,
-        theme_markers::{
-            ThemeBackground, ThemeBorderColor, ThemeButtonBackground, ThemePrimaryTextColor,
-        },
+        theme_markers::{ThemeBorderColor, ThemeButtonBackground, ThemePrimaryTextColor},
     },
 };
 use bevy::prelude::*;

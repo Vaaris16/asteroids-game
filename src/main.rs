@@ -1,9 +1,5 @@
 use avian2d::PhysicsPlugins;
-use bevy::{
-    asset::AssetMetaCheck,
-    prelude::*,
-    render::view::screenshot::{Screenshot, save_to_disk},
-};
+use bevy::{asset::AssetMetaCheck, prelude::*};
 
 use crate::{
     core::core_plugin::CorePlugin, game::game_plugin::GamePlugin,

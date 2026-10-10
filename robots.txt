@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://asteroids-cosmic-game.vercel.app/sitemap.xml
