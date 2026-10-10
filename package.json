@@ -1,0 +1,23 @@
+{
+  "name": "primary",
+  "version": "1.0.0",
+  "description": "**Asteroids** is a recreation of the classic [*Asteroids*](https://en.wikipedia.org/wiki/Asteroids_(video_game)) arcade game, built entirely in **Rust** using the [**Bevy game engine**](https://github.com/bevyengine/bevy).",
+  "main": "resume_audio_context.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vaaris16/asteroids-game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vaaris16/asteroids-game/issues"
+  },
+  "homepage": "https://github.com/Vaaris16/asteroids-game#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
