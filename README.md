@@ -16,6 +16,6 @@
 <img src="assets/game_preview_images/retro preview/retro_game_play.png" alt="Game Play" style="width: 90%; height: 90%;" />
 <img src="assets/game_preview_images/retro preview/retro_retry.png" alt="Retry" style="width: 90%; height: 90%;" />
 
-[**Player Asteroids!**](https://asteroids-cosmic-game.vercel.app/)
+[**Play Asteroids!**](https://asteroids-cosmic-game.vercel.app/)
 
 **Enjoy!**
