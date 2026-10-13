@@ -5,7 +5,9 @@ use crate::{
     core::game_fonts::fonts::GameFonts,
     game_theme::{
         theme_colors::ThemeColors,
-        theme_markers::{ThemeBorderColor, ThemeButtonBackground, ThemePrimaryTextColor},
+        theme_markers::{
+            ThemeBorderColor, ThemeButtonBackground, ThemePrimaryTextColor, ThemeSecondaryTextColor,
+        },
     },
 };
 use bevy::prelude::*;
@@ -42,17 +44,23 @@ fn splash_screen(mut commands: Commands, assets_server: Res<AssetServer>) {
             ..Default::default()
         },
         SplashScreenComponent,
-        children![splash_title(&assets_server), start_button(&assets_server)],
+        children![
+            splash_title(&assets_server),
+            start_button(&assets_server),
+            spawn_controls_text(&assets_server)
+        ],
     ));
 }
 
 // Font size of the splash screen title.
 const FONT_SIZE_SPLASH_TITLE: i32 = 120;
+// Defines the splash title.
+const SPLASH_TITLE_TEXT: &str = "ASTEROID";
 
 // Spawns the splash screen title.
 fn splash_title(assets_server: &AssetServer) -> impl Bundle {
     (
-        Text::new("ASTEROID"),
+        Text::new(SPLASH_TITLE_TEXT),
         TextFont {
             font_size: px(FONT_SIZE_SPLASH_TITLE).into(),
             font: assets_server
@@ -71,8 +79,10 @@ const START_BUTTON_FONT_SIZE: i32 = 20;
 const SPLASH_START_BUTTON_SIZE: Vec2 = Vec2::new(250., 60.);
 // Border thickness of the start button.
 const START_BUTTON_BORDER_THICKNESS: f32 = 2.5;
+// Defines the start button text.
+const START_BUTTON_TEXT: &str = "START";
 
-// Spawns the start button
+// Spawns the start button.
 fn start_button(assets_server: &AssetServer) -> impl Bundle {
     (
         Button,
@@ -91,7 +101,7 @@ fn start_button(assets_server: &AssetServer) -> impl Bundle {
         ThemeBorderColor,
         children![(
             StartButtonText,
-            Text::new("START"),
+            Text::new(START_BUTTON_TEXT),
             TextColor(TEXT_COLOR),
             TextFont {
                 font: assets_server
@@ -105,7 +115,7 @@ fn start_button(assets_server: &AssetServer) -> impl Bundle {
     )
 }
 
-// Handles interactions with the start button
+// Handles interactions with the start button.
 fn button_interactions(
     mut game_state: ResMut<NextState<GameState>>,
     start_button: Query<
@@ -132,7 +142,32 @@ fn button_interactions(
     }
 }
 
-// Cleans up the splash screen
+// Defines the controls text.
+const CONTROLS_TEXT: &str = "← ROTATE LEFT  → ROTATE RIGHT  SPACE SHOOT";
+
+fn spawn_controls_text(assets_server: &AssetServer) -> impl Bundle {
+    (
+        Node {
+            position_type: PositionType::Absolute,
+            bottom: px(55),
+            justify_content: JustifyContent::Center,
+            align_items: AlignItems::Center,
+            ..Default::default()
+        },
+        children![(
+            Text::new(CONTROLS_TEXT),
+            ThemeSecondaryTextColor,
+            TextFont {
+                font: assets_server
+                    .load(GameFonts::PressStart2P.font_path())
+                    .into(),
+                ..Default::default()
+            },
+        )],
+    )
+}
+
+// Cleans up the splash screen.
 fn clean_up_splash_screen(
     mut commands: Commands,
     splash_screen_entity: Single<Entity, With<SplashScreenComponent>>,
